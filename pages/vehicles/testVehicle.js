@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Layout from "../../components/layout";
 import MainRegistration from "../../components/Main/main";
 import Modal from "../../components/Main/modal";
-import styles from '../../components/Main/main.module.css'
+import VehicleDetail from "../../components/Main/vehicleDetail";
 
 export default function TestVehicle({ data }) {
     const [isOpened, setIsOpened] = useState(false);
@@ -17,9 +17,9 @@ export default function TestVehicle({ data }) {
     return (
         <Layout>
             <MainRegistration vehicles={data} onShow={handleClick} />
-            {isOpened && <Modal>
+            {isOpened && <Modal onShow={() => setIsOpened(false)}>
                 <h2>Vehicle detail info</h2>
-
+                <VehicleDetail vehicle={vehicle} />
             </Modal>}
         </Layout>
     );

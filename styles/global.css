@@ -1,3 +1,4 @@
+@import url('./header.css');
 html,
 body {
   padding: 0;
@@ -6,10 +7,17 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   line-height: 1.6;
   font-size: 18px;
+  box-sizing: border-box;
 }
 
-* {
-  box-sizing: border-box;
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 8px 0;
 }
 
 a {

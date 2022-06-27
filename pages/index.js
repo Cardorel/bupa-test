@@ -1,48 +1,39 @@
-import Head from 'next/head'
-import Layout, { siteTitle } from '../components/layout'
-import utilStyles from '../styles/utils.module.css'
-import { getSortedPostsData } from '../lib/posts'
-import Link from 'next/link'
-import Date from '../components/date'
+import { useState } from "react";
+import Head from "next/head";
+import Layout, { siteTitle } from "../components/layout";
+import { useRouter } from "next/router";
+import styles from "../components/Main/main.module.css";
 
-export default function Home({ allPostsData }) {
+export default function Home() {
+  const [registrationNumber, setRegistrationNumber] = useState("");
+  const router = useRouter();
+  const handleSubmit = (e) => {
+    if (registrationNumber.trim() !== "") {
+      router.push({
+        pathname: "/vehicles",
+        query: { registration: registrationNumber },
+      });
+    }
+  };
+
+  const handleChange = (e) => setRegistrationNumber(e.target.value);
   return (
-    <Layout home>
+    <Layout>
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      <section className={utilStyles.headingMd}>
-        <p>[Your Self Introduction]</p>
-        <p>
-          (This is a sample website - you’ll be building a site like this in{' '}
-          <a href="https://nextjs.org/learn">our Next.js tutorial</a>.)
-        </p>
-      </section>
-      <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-        <h2 className={utilStyles.headingLg}>Blog</h2>
-        <ul className={utilStyles.list}>
-          {allPostsData.map(({ id, date, title }) => (
-            <li className={utilStyles.listItem} key={id}>
-              <Link href={`/posts/${id}`}>
-                <a>{title}</a>
-              </Link>
-              <br />
-              <small className={utilStyles.lightText}>
-                <Date dateString={date} />
-              </small>
-            </li>
-          ))}
-        </ul>
-      </section>
+      <div className={styles.searchContent}>
+        <input
+          type="text"
+          className={styles.searchInput}
+          value={registrationNumber}
+          onChange={handleChange}
+          placeholder="search by registration number"
+        />
+        <button onClick={handleSubmit} className={styles.btnFind}>
+          Find
+        </button>
+      </div>
     </Layout>
-  )
-}
-
-export async function getStaticProps() {
-  const allPostsData = getSortedPostsData()
-  return {
-    props: {
-      allPostsData
-    }
-  }
+  );
 }
